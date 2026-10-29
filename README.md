@@ -15,6 +15,7 @@ Prototipo para proponer al equipo de FaceSearch. **No es la web oficial** ([face
 - Selector de caras: si la foto tiene varias, eliges cuál buscar.
 - Animación estilo Face ID: anillo de marcas que se encienden una a una y check al terminar.
 - 7 idiomas (es, en, fr, de, pt, ja, zh), 3 monedas (USD, EUR, GBP) y tema claro/oscuro.
-- Menú lateral en móvil y pie con enlaces a las páginas reales de facesearch.app.
+- Páginas propias con el mismo estilo, resumidas y con botón «Volver» y «Volver al inicio»: Privacidad, Términos, Eliminar mi foto, Preguntas frecuentes, Garantía, Casos de uso, Empresas y Tu cuenta.
+- Menú lateral en móvil. Los únicos enlaces externos son las redes sociales.
 
 La foto nunca sale del dispositivo. `?cam=1` abre la cámara directamente.

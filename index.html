@@ -190,6 +190,17 @@ dialog::backdrop{background:var(--scrim)}
 .cstate p{margin:0;max-width:420px;line-height:1.55}
 .cstate .help{padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.1);font-size:14px}
 .cstate .b1{background:#fff;color:#0A0B0F}.cstate .b2{background:transparent;color:#fff;border-color:rgba(255,255,255,.35)}
+/* Páginas internas */
+.pagewrap{max-width:860px;padding-top:28px;padding-bottom:72px}
+.crumbs{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:28px}
+.back{height:40px;padding:0 14px 0 10px}
+.crumb{font-size:14px;color:var(--muted)}.crumb a{color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+#page h1{margin:0 0 10px;font-size:clamp(32px,5vw,48px);font-weight:800;letter-spacing:-.035em}
+.lead{margin:0 0 28px;font-size:18px;line-height:1.55;color:var(--muted)}
+.pgitems{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:12px}
+.pgfoot{margin-top:36px;display:flex;flex-wrap:wrap;gap:10px}
+.demo{margin:12px 0 0;padding:12px 14px;border-radius:12px;background:var(--mintTint);color:var(--mintText);font-size:14px;font-weight:600}
+.gbtn{height:52px;padding:0 22px;border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--text);font-weight:700;font-size:15px;display:inline-flex;align-items:center;gap:10px;cursor:pointer}
 /* Anillo de marcas estilo Face ID */
 .tk{stroke:var(--tick);stroke-width:3.2;stroke-linecap:round;transform-box:view-box;transform-origin:50% 50%;transition:stroke .18s,transform .25s cubic-bezier(.2,.9,.3,1.4),opacity .2s}
 .tk.on{stroke:var(--mint);transform:scale(1.07);opacity:1!important;animation:none!important}
@@ -305,7 +316,8 @@ dialog::backdrop{background:var(--scrim)}
           <div style="width:100%;display:flex;justify-content:space-between;align-items:center"><strong data-i18n="results_title"></strong><span class="badge">Demo</span></div>
           <div class="grid3"><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div></div>
           <p class="small" style="line-height:1.5" data-i18n="results_note"></p>
-          <div class="btns"><a class="b1" data-href="home"><span data-i18n="unlock"></span> <span data-price></span></a><button class="b2" id="again" type="button" data-i18n="new_search"></button></div>
+          <div class="btns"><button class="b1" type="button" data-pay-demo><span data-i18n="unlock"></span> <span data-price></span></button><button class="b2" id="again" type="button" data-i18n="new_search"></button></div>
+          <p class="demo hidden" data-pay-note data-ui="payDemo"></p>
         </div>
       </div>
     </div>
@@ -378,7 +390,7 @@ dialog::backdrop{background:var(--scrim)}
       <div class="ppanel hidden" data-ppanel="deep">
         <div class="deep">
           <div><p data-i18n="deep_p"></p><p class="dc" data-i18n="deep_cost"></p></div>
-          <div class="amount"><a data-href="home" data-i18n="deep_cta"></a></div>
+          <div class="amount"><a href="#top" data-i18n="deep_cta"></a></div>
         </div>
       </div>
     </div>
@@ -397,6 +409,19 @@ dialog::backdrop{background:var(--scrim)}
   </section>
 </main>
 
+<main id="page" class="hidden" tabindex="-1">
+  <div class="wrap pagewrap">
+    <nav class="crumbs" aria-label="Ruta">
+      <button class="b2 back" id="pgBack" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg><span data-ui="back"></span></button>
+      <span class="crumb"><a href="#/" data-ui="home"></a> / <span id="pgCrumb" aria-current="page"></span></span>
+    </nav>
+    <h1 id="pgTitle"></h1>
+    <p class="lead" id="pgIntro"></p>
+    <div id="pgBody"></div>
+    <div class="pgfoot"><a class="b1" href="#/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg><span data-ui="toHome"></span></a></div>
+  </div>
+</main>
+
 <footer>
   <div class="wrap">
     <span class="brand"><b>facesearch</b>© 2026 Face Search</span>
@@ -404,9 +429,8 @@ dialog::backdrop{background:var(--scrim)}
       <a data-href="privacy" data-i18n="f_privacy"></a>
       <a data-href="terms" data-i18n="f_terms"></a>
       <a data-href="remove" data-i18n="f_remove"></a>
-      <a data-href="blog" data-i18n="f_blog"></a>
       <a data-href="enterprise" data-i18n="enterprise"></a>
-      <a data-href="settings" data-i18n="f_settings"></a>
+      <a data-href="settings" data-ui="account"></a>
     </nav>
     <div class="social">
       <a href="https://www.tiktok.com/@face.search" target="_blank" rel="noopener" aria-label="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-.88-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
@@ -478,6 +502,7 @@ dialog::backdrop{background:var(--scrim)}
 </section>
 
 <script src="i18n.js"></script>
+<script src="pages.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface@0.1.0/dist/blazeface.min.umd.js" defer></script>
 <script>
@@ -540,13 +565,6 @@ LANGS.forEach(([code], li) => {
 });
 const LOC = { es: 'es-ES', en: 'en-US', fr: 'fr-FR', de: 'de-DE', pt: 'pt-BR', ja: 'ja-JP', zh: 'zh-CN' };
 const SYM = { USD: '$', EUR: '€', GBP: '£' };
-const SLUGS = {
-  en: { privacy: 'privacy', terms: 'terms', remove: 'remove-my-photo', blog: 'blog', settings: 'settings', faq: 'faq', uses: 'use-cases', guarantee: 'guaranteed-results', enterprise: 'enterprise' },
-  es: { privacy: 'privacidad', terms: 'terminos', remove: 'eliminar-mi-foto', blog: 'blog', settings: 'configuracion', faq: 'preguntas-frecuentes', uses: 'casos-de-uso', guarantee: 'resultados-garantizados', enterprise: 'empresas' },
-  fr: { privacy: 'confidentialite', terms: 'conditions', remove: 'supprimer-ma-photo', blog: 'blog', settings: 'parametres', faq: 'questions-frequentes', uses: 'cas-d-utilisation', guarantee: 'resultats-garantis', enterprise: 'entreprise' },
-  de: { privacy: 'datenschutz', terms: 'nutzungsbedingungen', remove: 'mein-foto-entfernen', blog: 'blog', settings: 'einstellungen', faq: 'haeufige-fragen', uses: 'anwendungsfaelle', guarantee: 'garantierte-ergebnisse', enterprise: 'unternehmen' },
-  pt: { privacy: 'privacidade', terms: 'termos', remove: 'remover-minha-foto', blog: 'blog', settings: 'configuracoes', faq: 'perguntas-frequentes', uses: 'casos-de-uso', guarantee: 'resultados-garantidos', enterprise: 'empresas' }
-};
 
 const browserLang = (navigator.language || 'es').slice(0, 2);
 let lang = store.get('fs-lang') || (T[browserLang] ? browserLang : 'es');
@@ -555,13 +573,9 @@ let theme = store.get('fs-theme') || (matchMedia('(prefers-color-scheme: dark)')
 let t = T[lang];
 
 function priceText() { return money(3.99); }
-function url(k) {
-  const base = 'https://facesearch.app/' + (lang === 'en' ? '' : lang);
-  if (k === 'home') return base;
-  if (k === 'credits') return url('settings') + '?buy=1';
-  const sl = SLUGS[lang] || SLUGS.en;
-  return base.replace(/\/$/, '') + '/' + sl[k];
-}
+// Todos los enlaces llevan a páginas de esta misma web (no a la web antigua).
+const ROUTES = { privacy: 'privacy', terms: 'terms', remove: 'remove', faq: 'faq', guarantee: 'guarantee', uses: 'uses', enterprise: 'business', settings: 'account', credits: 'account' };
+function url(k) { return k === 'home' ? '#top' : '#/' + (ROUTES[k] || ''); }
 function matches(n) { return lang === 'ja' ? n + t.matches : n + ' ' + t.matches; }
 
 function renderRecent() {
@@ -592,7 +606,7 @@ function renderPacks() {
     d.children[0].textContent = n + ' ' + (n === 1 ? t.pk_credit : t.pk_credits);
     d.children[1].textContent = money(v);
     d.children[2].textContent = money(v / n) + ' ' + t.pk_per;
-    d.children[3].textContent = t.pk_buy; d.children[3].href = url('credits');
+    d.children[3].textContent = t.pk_buy; d.children[3].href = '#/account';
     box.appendChild(d);
   });
 }
@@ -631,6 +645,8 @@ function apply() {
   document.documentElement.lang = lang;
   document.documentElement.dataset.theme = theme;
   $$('[data-i18n]').forEach((el) => { el.textContent = t[el.dataset.i18n] || ''; });
+  const U = (FS_PAGES[lang] || FS_PAGES.es).ui;
+  $$('[data-ui]').forEach((el) => { el.textContent = U[el.dataset.ui] || ''; });
   $$('[data-href]').forEach((el) => { el.href = url(el.dataset.href); });
   $$('[data-price]').forEach((el) => { el.textContent = priceText(); });
   $$('[data-region-short]').forEach((el) => { el.textContent = lang.toUpperCase() + ' · ' + cur; });
@@ -638,8 +654,73 @@ function apply() {
   $$('[data-theme-toggle]').forEach((el) => el.setAttribute('aria-label', theme === 'dark' ? t.light : t.dark));
   $$('[data-open-region]').forEach((el) => el.setAttribute('aria-label', t.region));
   $('menuBtn').setAttribute('aria-label', t.menu);
-  renderRecent(); renderCurrencies(); renderLangs(); renderPacks();
+  renderRecent(); renderCurrencies(); renderLangs(); renderPacks(); route(true);
 }
+
+/* ---------- Páginas internas (#/privacy, #/terms…) con botón Volver ---------- */
+let navDepth = 0;
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+function cards(items) { const g = el('div', 'pgitems'); items.forEach(([h, p]) => { const b = el('div', 'box o'); b.append(el('strong', '', h), el('span', '', p)); g.appendChild(b); }); return g; }
+function mailBtn(addr, subject, label) { const a = el('a', 'b1', label); a.href = 'mailto:' + addr + '?subject=' + encodeURIComponent(subject); a.style.marginTop = '20px'; return a; }
+function renderPage(id) {
+  const P = (FS_PAGES[lang] || FS_PAGES.es), pg = P[id];
+  if (!pg) return false;
+  $('pgTitle').textContent = pg.t; $('pgCrumb').textContent = pg.t; $('pgIntro').textContent = pg.i;
+  document.title = pg.t + ' — FaceSearch';
+  const body = $('pgBody'); body.innerHTML = '';
+  if (id === 'faq') {
+    const f = el('div', 'faq');
+    const qa = [[t.q1, t.a1], [t.q2, t.a2], [t.q3, t.a3], [t.q4, t.a4], [t.q5, t.a5], ...pg.items];
+    qa.forEach(([q, a], i) => { const d = el('details'); if (i === 0) d.open = true; d.append(el('summary', '', q), el('p', '', a)); f.appendChild(d); });
+    body.appendChild(f);
+  } else if (id === 'guarantee') {
+    body.append(cards([[t.g1t, t.g1d], [t.g2t, t.g2d], [t.g3t, t.g3d], ...pg.items]));
+  } else if (id === 'uses') {
+    body.append(cards([[t.u1t, t.u1d], [t.u2t, t.u2d], [t.u3t, t.u3d], ...pg.items]));
+  } else if (id === 'account') {
+    const g = el('button', 'gbtn'); g.type = 'button';
+    g.innerHTML = '<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg><span></span>';
+    g.lastChild.textContent = P.ui.google;
+    const note = el('p', 'demo hidden', P.ui.accountDemo);
+    g.addEventListener('click', () => note.classList.remove('hidden'));
+    const band = el('div', 'price'); band.style.cssText = 'display:block;margin-top:28px';
+    band.append(el('h2', '', t.pr_packs));
+    const packs = el('div', 'packs'); packs.style.marginTop = '18px';
+    PACKS.forEach(([n, v]) => {
+      const d = el('div', 'pack');
+      d.append(el('strong', '', n + ' ' + (n === 1 ? t.pk_credit : t.pk_credits)), el('span', 'pp', money(v)), el('span', 'per', money(v / n) + ' ' + t.pk_per));
+      const b = el('a', '', t.pk_buy); b.href = '#'; b.addEventListener('click', (e) => { e.preventDefault(); payNote.classList.remove('hidden'); });
+      d.append(b); packs.appendChild(d);
+    });
+    const payNote = el('p', 'demo hidden', P.ui.payDemo);
+    band.append(packs, el('p', 'pnote', t.pk_note), payNote);
+    body.append(g, note, band);
+  } else {
+    body.append(cards(pg.items));
+    if (id === 'remove') body.append(mailBtn('privacy@facesearch.app', P.remove.t, P.ui.mail));
+    if (id === 'business') body.append(mailBtn('contact@facesearch.app', P.business.t, P.ui.mail));
+  }
+  return true;
+}
+function route(rerender) {
+  const h = location.hash;
+  const isPage = h.startsWith('#/') && h.length > 2;
+  if (isPage && renderPage(h.slice(2))) {
+    $('top').classList.add('hidden'); $('page').classList.remove('hidden');
+    if (!rerender) { window.scrollTo(0, 0); $('page').focus({ preventScroll: true }); }
+    return;
+  }
+  document.title = 'FaceSearch — prototipo de rediseño';
+  const wasPage = !$('page').classList.contains('hidden');
+  $('page').classList.add('hidden'); $('top').classList.remove('hidden');
+  if (rerender) return;
+  const target = h && h.length > 1 && !h.startsWith('#/') ? document.getElementById(h.slice(1)) : null;
+  if (target) target.scrollIntoView();
+  else if (wasPage || h === '#/') window.scrollTo(0, 0);
+}
+addEventListener('hashchange', () => { navDepth++; closeDrawer(); route(false); });
+$('pgBack').addEventListener('click', () => { if (navDepth > 0) history.back(); else location.hash = '#/'; });
+$$('[data-pay-demo]').forEach((b) => b.addEventListener('click', () => $$('[data-pay-note]').forEach((n) => n.classList.remove('hidden'))));
 
 /* ---------- Tema, idioma, menú, pestañas ---------- */
 $$('[data-theme-toggle]').forEach((b) => b.addEventListener('click', () => { theme = theme === 'dark' ? 'light' : 'dark'; store.set('fs-theme', theme); apply(); }));
@@ -658,7 +739,7 @@ function setTab(which) {
 }
 $('tabHow').addEventListener('click', () => setTab('how'));
 $('tabRecent').addEventListener('click', () => setTab('recent'));
-$$('[data-tab]').forEach((b) => b.addEventListener('click', () => { setTab(b.dataset.tab); closeDrawer(); $('tabHow').scrollIntoView({ behavior: 'smooth', block: 'center' }); }));
+$$('[data-tab]').forEach((b) => b.addEventListener('click', () => { if (!$('page').classList.contains('hidden')) location.hash = '#top'; setTab(b.dataset.tab); closeDrawer(); setTimeout(() => $('tabHow').scrollIntoView({ behavior: 'smooth', block: 'center' }), 60); }));
 
 /* ---------- Anillo de marcas estilo Face ID ---------- */
 const SVGNS = 'http://www.w3.org/2000/svg';

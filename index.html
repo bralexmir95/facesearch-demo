@@ -222,6 +222,19 @@ dialog::backdrop{background:var(--scrim)}
 .pack.gift{border-color:#3DE0B0}
 .gift-note{margin:14px 0 16px!important;padding:12px 14px;border-radius:12px;background:rgba(61,224,176,.12);color:#3DE0B0;font-size:14px;font-weight:600}
 .empty{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:15px}
+/* Botón flotante para subir */
+.totop{position:fixed;right:max(20px,env(safe-area-inset-right));bottom:max(20px,env(safe-area-inset-bottom));z-index:30;width:58px;height:58px;padding:0;border:0;border-radius:50%;background:var(--btn);color:var(--btnText);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;transform:translateY(18px) scale(.85);pointer-events:none;transition:opacity .25s,transform .3s cubic-bezier(.2,.9,.3,1.3)}
+.totop.show{opacity:1;transform:none;pointer-events:auto}
+.totop:hover{transform:translateY(-2px)}
+.totop svg.prog2{position:absolute;inset:0;transform:rotate(-90deg)}
+.totop .trk{stroke:rgba(127,127,127,.35)}.totop .bar{stroke:var(--mint);transition:stroke-dashoffset .1s linear}
+/* País y moneda */
+.region-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:14px 0 16px}
+.region-row label{font-size:13px;font-weight:600;color:#9AA0AC}
+.region-row select{height:40px;padding:0 34px 0 12px;border:1px solid #3A3F4B;border-radius:10px;background:#1A1D25 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23C3C7D0' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;color:#F4F5F7;font:600 14px 'Plus Jakarta Sans',sans-serif;appearance:none;-webkit-appearance:none;cursor:pointer}
+.region-row .cur{margin:0}
+.region-row small{flex-basis:100%;font-size:12px;color:#9AA0AC}
+dialog select{width:100%;height:46px;padding:0 12px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font:600 14px 'Plus Jakarta Sans',sans-serif}
 /* Anillo de marcas estilo Face ID */
 .tk{stroke:var(--tick);stroke-width:3.2;stroke-linecap:round;transform-box:view-box;transform-origin:50% 50%;transition:stroke .18s,transform .25s cubic-bezier(.2,.9,.3,1.4),opacity .2s}
 .tk.on{stroke:var(--mint);transform:scale(1.07);opacity:1!important;animation:none!important}
@@ -406,6 +419,7 @@ dialog::backdrop{background:var(--scrim)}
         <div class="amount"><b data-price></b><a href="#top" data-i18n="p_cta"></a></div>
       </div>
       <div class="ppanel hidden" data-ppanel="packs">
+        <div data-region-row></div>
         <div class="packs" id="packs"></div>
         <p class="pnote" data-i18n="pk_note"></p>
       </div>
@@ -440,7 +454,6 @@ dialog::backdrop{background:var(--scrim)}
     <h1 id="pgTitle"></h1>
     <p class="lead" id="pgIntro"></p>
     <div id="pgBody"></div>
-    <div class="pgfoot"><a class="b1" href="#/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg><span data-ui="toHome"></span></a></div>
   </div>
 </main>
 
@@ -464,13 +477,22 @@ dialog::backdrop{background:var(--scrim)}
   </div>
 </footer>
 
+<button class="totop" id="toTop" type="button">
+  <svg class="prog2" width="58" height="58" viewBox="0 0 58 58" aria-hidden="true"><circle class="trk" cx="29" cy="29" r="26" fill="none" stroke-width="3"/><circle class="bar" id="toTopBar" cx="29" cy="29" r="26" fill="none" stroke-width="3" stroke-linecap="round" stroke-dasharray="163.4" stroke-dashoffset="163.4"/></svg>
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+  <span class="sr" data-i18n="to_top"></span>
+</button>
+
 <!-- Idioma y moneda -->
 <dialog id="region" aria-labelledby="regionTitle">
   <div class="dhead"><strong id="regionTitle" style="font-size:18px" data-i18n="region"></strong><button class="icon-btn" type="button" data-close-region><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span class="sr" data-i18n="cam_cancel"></span></button></div>
   <span class="dlabel" data-i18n="lang"></span>
   <div class="opts" id="langOpts"></div>
+  <label class="dlabel" for="countrySel" data-i18n="country"></label>
+  <select id="countrySel" data-country-select></select>
   <span class="dlabel" data-i18n="currency"></span>
   <div class="opts c3" data-cur-group-dialog></div>
+  <p class="small" style="margin-top:10px" data-i18n="cur_auto"></p>
 </dialog>
 
 <!-- Menú lateral (móvil) -->
@@ -576,6 +598,10 @@ const EXTRA = {
   face_ok: ['Cara detectada', 'Face detected', 'Visage détecté', 'Gesicht erkannt', 'Rosto detectado', '顔を検出しました', '已检测到人脸'],
   detecting: ['Detectando caras…', 'Detecting faces…', 'Détection des visages…', 'Gesichter werden erkannt…', 'Detectando rostos…', '顔を検出中…', '正在检测人脸…'],
   scan_done: ['¡Búsqueda completada!', 'Search complete!', 'Recherche terminée !', 'Suche abgeschlossen!', 'Pesquisa concluída!', '検索完了！', '搜索完成！'],
+  to_top: ['Subir al principio', 'Back to top', 'Revenir en haut', 'Nach oben', 'Voltar ao topo', 'ページの先頭へ', '回到顶部'],
+  country: ['País o región', 'Country or region', 'Pays ou région', 'Land oder Region', 'País ou região', '国・地域', '国家或地区'],
+  other_country: ['Otro país', 'Other country', 'Autre pays', 'Anderes Land', 'Outro país', 'その他の国', '其他国家'],
+  cur_auto: ['La moneda se ajusta a tu país: euro en la zona euro, libra en Reino Unido y dólar en el resto.', 'Currency follows your country: euro in the eurozone, pound in the UK and dollar elsewhere.', 'La devise suit votre pays : euro dans la zone euro, livre au Royaume-Uni et dollar ailleurs.', 'Die Währung richtet sich nach deinem Land: Euro in der Eurozone, Pfund im Vereinigten Königreich, sonst Dollar.', 'A moeda segue o seu país: euro na zona do euro, libra no Reino Unido e dólar no resto.', '通貨は国に合わせて変わります：ユーロ圏はユーロ、英国はポンド、その他はドル。', '货币随国家自动调整：欧元区为欧元，英国为英镑，其他地区为美元。'],
   cam_none: ['No se ha encontrado ninguna cámara.', 'No camera was found.', 'Aucune caméra trouvée.', 'Keine Kamera gefunden.', 'Nenhuma câmera encontrada.', 'カメラが見つかりません。', '未找到相机。']
 };
 const T = {};
@@ -590,7 +616,14 @@ const SYM = { USD: '$', EUR: '€', GBP: '£' };
 
 const browserLang = (navigator.language || 'es').slice(0, 2);
 let lang = store.get('fs-lang') || (T[browserLang] ? browserLang : 'es');
-let cur = store.get('fs-cur') || 'USD';
+// Misma regla que facesearch.app (server/lib/pack-prices.js): zona euro -> EUR, Reino Unido -> GBP, resto -> USD.
+const EURO_COUNTRIES = ['AD', 'AT', 'BE', 'BG', 'CY', 'DE', 'EE', 'ES', 'FI', 'FR', 'GR', 'HR', 'IE', 'IT', 'LT', 'LU', 'LV', 'MC', 'ME', 'MT', 'NL', 'PT', 'SI', 'SK', 'SM', 'VA', 'XK'];
+const GBP_COUNTRIES = ['GB', 'GG', 'IM', 'JE'];
+const COUNTRIES = ['ES', 'MX', 'AR', 'CO', 'CL', 'PE', 'VE', 'EC', 'US', 'CA', 'GB', 'IE', 'FR', 'DE', 'IT', 'PT', 'NL', 'BE', 'AT', 'BR', 'JP', 'CN', 'AU', 'ZZ'];
+function currencyFor(c) { return EURO_COUNTRIES.includes(c) ? 'EUR' : GBP_COUNTRIES.includes(c) ? 'GBP' : 'USD'; }
+const guessCountry = (navigator.language || '').split('-')[1];
+let country = store.get('fs-country') || (guessCountry && COUNTRIES.includes(guessCountry.toUpperCase()) ? guessCountry.toUpperCase() : 'ES');
+let cur = store.get('fs-cur') || currencyFor(country);
 let theme = store.get('fs-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 let t = T[lang];
 
@@ -638,6 +671,39 @@ $$('[data-ptab]').forEach((b) => b.addEventListener('click', () => {
   $$('[data-ptab]').forEach((x) => x.setAttribute('aria-selected', String(x === b)));
   $$('[data-ppanel]').forEach((p) => p.classList.toggle('hidden', p.dataset.ppanel !== b.dataset.ptab));
 }));
+function countryName(code) {
+  if (code === 'ZZ') return t.other_country;
+  try { return new Intl.DisplayNames([LOC[lang]], { type: 'region' }).of(code); } catch (e) { return code; }
+}
+function setCountry(code) { country = code; cur = currencyFor(code); store.set('fs-country', code); store.set('fs-cur', cur); apply(); }
+function fillCountrySelect(sel) {
+  sel.innerHTML = '';
+  COUNTRIES.map((c) => [c, countryName(c)]).sort((a, b) => (a[0] === 'ZZ') - (b[0] === 'ZZ') || a[1].localeCompare(b[1], LOC[lang]))
+    .forEach(([c, name]) => { const o = document.createElement('option'); o.value = c; o.textContent = name; if (c === country) o.selected = true; sel.appendChild(o); });
+}
+// Bloque "País + moneda" para la zona de compra (portada y cuenta)
+function regionRow() {
+  const row = document.createElement('div'); row.className = 'region-row';
+  const id = 'country-' + Math.random().toString(36).slice(2, 7);
+  const lab = document.createElement('label'); lab.htmlFor = id; lab.textContent = t.country;
+  const sel = document.createElement('select'); sel.id = id; fillCountrySelect(sel);
+  sel.addEventListener('change', () => setCountry(sel.value));
+  const curs = document.createElement('div'); curs.className = 'cur'; curs.setAttribute('role', 'radiogroup'); curs.setAttribute('aria-label', t.currency);
+  ['USD', 'EUR', 'GBP'].forEach((c) => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = c + ' ' + SYM[c];
+    b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', String(c === cur));
+    b.addEventListener('click', () => { cur = c; store.set('fs-cur', c); apply(); });
+    curs.appendChild(b);
+  });
+  const note = document.createElement('small'); note.textContent = t.cur_auto;
+  row.append(lab, sel, curs, note);
+  return row;
+}
+function renderRegionRows() {
+  $$('[data-region-row]').forEach((box) => { box.innerHTML = ''; box.appendChild(regionRow()); });
+  $$('[data-country-select]').forEach(fillCountrySelect);
+}
+$('countrySel').addEventListener('change', (e) => setCountry(e.target.value));
 function renderCurrencies() {
   const groups = [...$$('[data-cur-group]'), ...$$('[data-cur-group-dialog]')];
   groups.forEach((g) => {
@@ -678,7 +744,7 @@ function apply() {
   $$('[data-theme-toggle]').forEach((el) => el.setAttribute('aria-label', theme === 'dark' ? t.light : t.dark));
   $$('[data-open-region]').forEach((el) => el.setAttribute('aria-label', t.region));
   $('menuBtn').setAttribute('aria-label', t.menu);
-  renderRecent(); renderCurrencies(); renderLangs(); renderPacks(); route(true);
+  renderRecent(); renderCurrencies(); renderLangs(); renderPacks(); renderRegionRows(); route(true);
 }
 
 /* ---------- Páginas internas (#/privacy, #/terms…) con botón Volver ---------- */
@@ -698,6 +764,7 @@ function quickBtn(icon, label, onClick, cls) { const b = el('button', cls || '')
 function packsBand(P, A) {
   const band = el('div', 'price'); band.style.cssText = 'display:block;margin-top:16px';
   band.append(el('h2', '', A.buy));
+  band.append(regionRow());
   const gift = el('p', 'gift-note', '🎁 ' + A.welcome); gift.style.marginTop = '14px';
   band.append(gift);
   const packs = el('div', 'packs');
@@ -1076,7 +1143,18 @@ $('shutter').addEventListener('click', capture);
 $('flip').addEventListener('click', () => { facing = facing === 'user' ? 'environment' : 'user'; stopCam(); openCam(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeCam(); closeDrawer(); } });
 
+// Botón flotante: aparece al bajar y el anillo muestra cuánto has recorrido.
+const toTop = $('toTop'), toTopBar = $('toTopBar');
+function onScroll() {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  const p = max > 0 ? Math.min(1, scrollY / max) : 0;
+  toTop.classList.toggle('show', scrollY > 420);
+  toTopBar.style.strokeDashoffset = (163.4 * (1 - p)).toFixed(1);
+}
+addEventListener('scroll', onScroll, { passive: true });
+toTop.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); });
 apply();
+onScroll();
 // Abierta con ?cam=1 (desde la maqueta): la cámara arranca directamente.
 if (new URLSearchParams(location.search).get('cam') === '1' && !isMobile) openCam();
 </script>

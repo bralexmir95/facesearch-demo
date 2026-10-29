@@ -2,6 +2,7 @@
 // Cada página: título, una frase de introducción y 3–5 puntos cortos.
 window.FS_PAGES = {
   es: {
+    acc: { hello: 'Hola', email: 'tu@email.com', balance: 'Tu saldo', zero: 'Aún no tienes créditos. Compra un paquete para empezar.', buy: 'Comprar créditos', welcome: 'Primera compra: +10 créditos de regalo con el paquete de 30.', save: 'Ahorras', vat: 'El IVA se calcula al pagar · Pago seguro con Stripe', couponPh: 'Código promocional', redeem: 'Canjear', couponDemo: 'Demo: en la web real aquí se valida el código.', quick: 'Ajustes', lang: 'Idioma', theme: 'Tema', support: 'Soporte', signout: 'Cerrar sesión', activity: 'Actividad reciente', noact: 'Aún no hay actividad.', signedDemo: 'Demo: sesión simulada para ver la cuenta.' },
     ui: { back: 'Volver', home: 'Inicio', toHome: 'Volver al inicio', mail: 'Escribir email', google: 'Continuar con Google', blog: 'Blog', account: 'Cuenta',
       accountDemo: 'Demo: en la web real aquí se abre el inicio de sesión con Google.', payDemo: 'Demo: en la web real aquí se abre el pago seguro de Stripe.', more: 'Más preguntas' },
     privacy: { t: 'Privacidad', i: 'Tu privacidad va primero. Así tratamos tus datos:', items: [
@@ -38,6 +39,7 @@ window.FS_PAGES = {
     account: { t: 'Tu cuenta', i: 'Inicia sesión para ver tu saldo y tu historial, y para comprar créditos.', items: [] }
   },
   en: {
+    acc: { hello: 'Hi', email: 'you@email.com', balance: 'Your balance', zero: "You don't have credits yet. Buy a pack to get started.", buy: 'Buy credits', welcome: 'First purchase: +10 bonus credits with the 30 pack.', save: 'Save', vat: 'VAT is calculated at checkout · Secure payment with Stripe', couponPh: 'Promo code', redeem: 'Redeem', couponDemo: 'Demo: on the live site the code is validated here.', quick: 'Settings', lang: 'Language', theme: 'Theme', support: 'Support', signout: 'Sign out', activity: 'Recent activity', noact: 'No activity yet.', signedDemo: 'Demo: simulated session to preview the account.' },
     ui: { back: 'Back', home: 'Home', toHome: 'Back to home', mail: 'Send email', google: 'Continue with Google', blog: 'Blog', account: 'Account',
       accountDemo: 'Demo: on the live site this opens Google sign-in.', payDemo: 'Demo: on the live site this opens secure Stripe checkout.', more: 'More questions' },
     privacy: { t: 'Privacy', i: 'Your privacy comes first. Here is how we handle your data:', items: [
@@ -74,6 +76,7 @@ window.FS_PAGES = {
     account: { t: 'Your account', i: 'Sign in to see your balance and history, and to buy credits.', items: [] }
   },
   fr: {
+    acc: { hello: 'Bonjour', email: 'vous@email.com', balance: 'Votre solde', zero: "Vous n'avez pas encore de crédits. Achetez un pack pour commencer.", buy: 'Acheter des crédits', welcome: 'Premier achat : +10 crédits offerts avec le pack de 30.', save: 'Économisez', vat: 'TVA calculée au paiement · Paiement sécurisé Stripe', couponPh: 'Code promo', redeem: 'Utiliser', couponDemo: 'Démo : sur le vrai site, le code est vérifié ici.', quick: 'Réglages', lang: 'Langue', theme: 'Thème', support: 'Support', signout: 'Se déconnecter', activity: 'Activité récente', noact: "Pas encore d'activité.", signedDemo: 'Démo : session simulée pour voir le compte.' },
     ui: { back: 'Retour', home: 'Accueil', toHome: "Retour à l'accueil", mail: 'Envoyer un e-mail', google: 'Continuer avec Google', blog: 'Blog', account: 'Compte',
       accountDemo: 'Démo : sur le vrai site, la connexion Google s’ouvre ici.', payDemo: 'Démo : sur le vrai site, le paiement sécurisé Stripe s’ouvre ici.', more: 'Plus de questions' },
     privacy: { t: 'Confidentialité', i: 'Votre vie privée passe en premier. Voici comment nous traitons vos données :', items: [
@@ -110,6 +113,7 @@ window.FS_PAGES = {
     account: { t: 'Votre compte', i: 'Connectez-vous pour voir votre solde et votre historique, et acheter des crédits.', items: [] }
   },
   de: {
+    acc: { hello: 'Hallo', email: 'du@email.com', balance: 'Dein Guthaben', zero: 'Du hast noch keine Credits. Kauf ein Paket, um zu starten.', buy: 'Credits kaufen', welcome: 'Erster Kauf: +10 Bonus-Credits mit dem 30er-Paket.', save: 'Spare', vat: 'MwSt. wird beim Bezahlen berechnet · Sichere Zahlung mit Stripe', couponPh: 'Gutscheincode', redeem: 'Einlösen', couponDemo: 'Demo: Auf der echten Website wird der Code hier geprüft.', quick: 'Einstellungen', lang: 'Sprache', theme: 'Design', support: 'Support', signout: 'Abmelden', activity: 'Letzte Aktivität', noact: 'Noch keine Aktivität.', signedDemo: 'Demo: simulierte Sitzung zur Vorschau.' },
     ui: { back: 'Zurück', home: 'Start', toHome: 'Zur Startseite', mail: 'E-Mail schreiben', google: 'Mit Google fortfahren', blog: 'Blog', account: 'Konto',
       accountDemo: 'Demo: Auf der echten Website öffnet sich hier die Google-Anmeldung.', payDemo: 'Demo: Auf der echten Website öffnet sich hier die sichere Stripe-Zahlung.', more: 'Weitere Fragen' },
     privacy: { t: 'Datenschutz', i: 'Deine Privatsphäre steht an erster Stelle. So gehen wir mit deinen Daten um:', items: [
@@ -146,6 +150,7 @@ window.FS_PAGES = {
     account: { t: 'Dein Konto', i: 'Melde dich an, um Guthaben und Verlauf zu sehen und Credits zu kaufen.', items: [] }
   },
   pt: {
+    acc: { hello: 'Olá', email: 'voce@email.com', balance: 'Seu saldo', zero: 'Você ainda não tem créditos. Compre um pacote para começar.', buy: 'Comprar créditos', welcome: 'Primeira compra: +10 créditos de bônus com o pacote de 30.', save: 'Economize', vat: 'Impostos calculados no pagamento · Pagamento seguro com Stripe', couponPh: 'Código promocional', redeem: 'Resgatar', couponDemo: 'Demo: no site real o código é validado aqui.', quick: 'Ajustes', lang: 'Idioma', theme: 'Tema', support: 'Suporte', signout: 'Sair', activity: 'Atividade recente', noact: 'Ainda não há atividade.', signedDemo: 'Demo: sessão simulada para ver a conta.' },
     ui: { back: 'Voltar', home: 'Início', toHome: 'Voltar ao início', mail: 'Enviar e-mail', google: 'Continuar com Google', blog: 'Blog', account: 'Conta',
       accountDemo: 'Demo: no site real, aqui abre o login com Google.', payDemo: 'Demo: no site real, aqui abre o pagamento seguro da Stripe.', more: 'Mais perguntas' },
     privacy: { t: 'Privacidade', i: 'Sua privacidade vem primeiro. Veja como tratamos seus dados:', items: [
@@ -182,6 +187,7 @@ window.FS_PAGES = {
     account: { t: 'Sua conta', i: 'Entre para ver seu saldo e histórico e comprar créditos.', items: [] }
   },
   ja: {
+    acc: { hello: 'こんにちは', email: 'you@email.com', balance: '残高', zero: 'まだクレジットがありません。パックを購入して始めましょう。', buy: 'クレジットを購入', welcome: '初回購入：30パックで+10クレジットをプレゼント。', save: 'お得', vat: '税は決済時に計算 · Stripeで安全に決済', couponPh: 'プロモコード', redeem: '適用', couponDemo: 'デモ：実際のサイトではここでコードを確認します。', quick: '設定', lang: '言語', theme: 'テーマ', support: 'サポート', signout: 'ログアウト', activity: '最近のアクティビティ', noact: 'まだアクティビティはありません。', signedDemo: 'デモ：アカウント表示用の仮のセッションです。' },
     ui: { back: '戻る', home: 'ホーム', toHome: 'ホームに戻る', mail: 'メールを送る', google: 'Googleで続ける', blog: 'ブログ', account: 'アカウント',
       accountDemo: 'デモ：実際のサイトではここでGoogleログインが開きます。', payDemo: 'デモ：実際のサイトではここでStripeの安全な決済が開きます。', more: 'その他の質問' },
     privacy: { t: 'プライバシー', i: 'プライバシーを最優先しています。データの扱いは次のとおりです：', items: [
@@ -218,6 +224,7 @@ window.FS_PAGES = {
     account: { t: 'アカウント', i: 'ログインすると残高や履歴の確認、クレジットの購入ができます。', items: [] }
   },
   zh: {
+    acc: { hello: '你好', email: 'you@email.com', balance: '你的余额', zero: '你还没有积分。购买套餐即可开始。', buy: '购买积分', welcome: '首次购买：30 积分套餐赠送 10 积分。', save: '节省', vat: '税费在付款时计算 · 通过 Stripe 安全支付', couponPh: '优惠码', redeem: '兑换', couponDemo: '演示：在正式网站上会在此验证优惠码。', quick: '设置', lang: '语言', theme: '主题', support: '客服', signout: '退出登录', activity: '最近活动', noact: '暂无活动。', signedDemo: '演示：模拟登录以预览账户。' },
     ui: { back: '返回', home: '首页', toHome: '返回首页', mail: '发送邮件', google: '使用 Google 继续', blog: '博客', account: '账户',
       accountDemo: '演示：在正式网站上，这里会打开 Google 登录。', payDemo: '演示：在正式网站上，这里会打开 Stripe 安全支付。', more: '更多问题' },
     privacy: { t: '隐私', i: '你的隐私最重要。我们这样处理你的数据：', items: [

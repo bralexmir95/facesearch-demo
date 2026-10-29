@@ -201,6 +201,27 @@ dialog::backdrop{background:var(--scrim)}
 .pgfoot{margin-top:36px;display:flex;flex-wrap:wrap;gap:10px}
 .demo{margin:12px 0 0;padding:12px 14px;border-radius:12px;background:var(--mintTint);color:var(--mintText);font-size:14px;font-weight:600}
 .gbtn{height:52px;padding:0 22px;border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--text);font-weight:700;font-size:15px;display:inline-flex;align-items:center;gap:10px;cursor:pointer}
+/* Cuenta */
+.acc-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;padding:22px;border-radius:24px;background:var(--surface);border:1px solid var(--border)}
+.acc-user{display:flex;align-items:center;gap:14px}
+.acc-av{width:52px;height:52px;border-radius:50%;background:var(--btn);color:var(--btnText);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px}
+.acc-user strong{display:block;font-size:18px}.acc-user div span{font-size:14px;color:var(--muted)}
+.acc-bal{display:flex;align-items:center;gap:12px;padding:10px 16px 10px 10px;border-radius:999px;background:var(--surface2)}
+.acc-bal b{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.acc-bal small{display:block;font-size:12px;color:var(--muted)}
+.acc-sec{margin-top:16px;padding:22px;border-radius:24px;background:var(--surface);border:1px solid var(--border)}
+.acc-sec h2{margin:0 0 14px;font-size:20px;font-weight:800;letter-spacing:-.02em}
+.acc-quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.acc-quick button,.acc-quick a{height:52px;border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--text);font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.acc-quick .danger{color:#D93F3F;border-color:rgba(217,63,63,.35)}
+.coupon{display:flex;gap:8px;margin-top:14px}
+.coupon input{flex:1;min-width:0;height:46px;padding:0 14px;border:1px solid #2E323C;border-radius:12px;background:rgba(255,255,255,.06);color:#F4F5F7;font:500 15px 'Plus Jakarta Sans',sans-serif}
+.coupon input::placeholder{color:#9AA0AC}
+.coupon button{height:46px;padding:0 18px;border:0;border-radius:12px;background:#F4F5F7;color:#0A0B0F;font-weight:700;cursor:pointer}
+.save{align-self:flex-start;padding:3px 8px;border-radius:999px;background:rgba(61,224,176,.14);color:#3DE0B0;font-size:12px;font-weight:700}
+.pack.gift{border-color:#3DE0B0}
+.gift-note{margin:14px 0 16px!important;padding:12px 14px;border-radius:12px;background:rgba(61,224,176,.12);color:#3DE0B0;font-size:14px;font-weight:600}
+.empty{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:15px}
 /* Anillo de marcas estilo Face ID */
 .tk{stroke:var(--tick);stroke-width:3.2;stroke-linecap:round;transform-box:view-box;transform-origin:50% 50%;transition:stroke .18s,transform .25s cubic-bezier(.2,.9,.3,1.4),opacity .2s}
 .tk.on{stroke:var(--mint);transform:scale(1.07);opacity:1!important;animation:none!important}
@@ -225,12 +246,13 @@ dialog::backdrop{background:var(--scrim)}
 .ptabs button{height:40px;padding:0 14px;border:0;border-radius:10px;background:transparent;color:#C3C7D0;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap}
 .ptabs button[aria-selected="true"]{background:#F4F5F7;color:#0A0B0F;font-weight:700}
 .ppanel{margin-top:24px}
-.packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.pack{padding:18px;border-radius:18px;border:1px solid #2E323C;background:rgba(255,255,255,.04);display:flex;flex-direction:column;gap:6px}
-.pack strong{font-size:22px;letter-spacing:-.02em}
+.packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px}
+.pack{padding:16px;border-radius:18px;border:1px solid #2E323C;background:rgba(255,255,255,.04);display:flex;flex-direction:column;gap:6px}
+.pack strong{font-size:19px;letter-spacing:-.02em}
+.pack .per{margin-bottom:8px}
 .pack .pp{font-size:20px;font-weight:800}
 .pack .per{font-size:12px;color:#9AA0AC}
-.pack a{margin-top:8px;height:40px;border-radius:12px;background:#F4F5F7;color:#0A0B0F;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center}
+.pack a{margin-top:auto;height:40px;border-radius:12px;background:#F4F5F7;color:#0A0B0F;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center}
 .pnote{margin:14px 0 0;font-size:13px;color:#9AA0AC}
 .deep{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
 .deep p{margin:0;max-width:560px;font-size:15px;line-height:1.6;color:#C3C7D0}
@@ -607,6 +629,8 @@ function renderPacks() {
     d.children[1].textContent = money(v);
     d.children[2].textContent = money(v / n) + ' ' + t.pk_per;
     d.children[3].textContent = t.pk_buy; d.children[3].href = '#/account';
+    const pct = Math.round((1 - (v / n) / PACKS[0][1]) * 100);
+    if (pct > 0) { const sv = el('span', 'save', (FS_PAGES[lang] || FS_PAGES.es).acc.save + ' ' + pct + '%'); d.insertBefore(sv, d.children[3]); }
     box.appendChild(d);
   });
 }
@@ -662,6 +686,71 @@ let navDepth = 0;
 function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 function cards(items) { const g = el('div', 'pgitems'); items.forEach(([h, p]) => { const b = el('div', 'box o'); b.append(el('strong', '', h), el('span', '', p)); g.appendChild(b); }); return g; }
 function mailBtn(addr, subject, label) { const a = el('a', 'b1', label); a.href = 'mailto:' + addr + '?subject=' + encodeURIComponent(subject); a.style.marginTop = '20px'; return a; }
+let demoSigned = false;
+const ICO = {
+  globe: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+  moon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>',
+  help: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>',
+  out: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>',
+  clock: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>'
+};
+function quickBtn(icon, label, onClick, cls) { const b = el('button', cls || ''); b.type = 'button'; b.innerHTML = ICO[icon] + '<span></span>'; b.lastChild.textContent = label; b.addEventListener('click', onClick); return b; }
+function packsBand(P, A) {
+  const band = el('div', 'price'); band.style.cssText = 'display:block;margin-top:16px';
+  band.append(el('h2', '', A.buy));
+  const gift = el('p', 'gift-note', '🎁 ' + A.welcome); gift.style.marginTop = '14px';
+  band.append(gift);
+  const packs = el('div', 'packs');
+  const base = PACKS[0][1];
+  const payNote = el('p', 'demo hidden', P.ui.payDemo);
+  PACKS.forEach(([n, v]) => {
+    const d = el('div', 'pack' + (n === 30 ? ' gift' : ''));
+    d.append(el('strong', '', n + ' ' + (n === 1 ? t.pk_credit : t.pk_credits)), el('span', 'pp', money(v)), el('span', 'per', money(v / n) + ' ' + t.pk_per));
+    const pct = Math.round((1 - (v / n) / base) * 100);
+    if (pct > 0) d.append(el('span', 'save', A.save + ' ' + pct + '%'));
+    const b = el('a', '', t.pk_buy); b.href = '#'; b.addEventListener('click', (e) => { e.preventDefault(); payNote.classList.remove('hidden'); });
+    d.append(b); packs.appendChild(d);
+  });
+  const coupon = el('form', 'coupon');
+  const inp = el('input'); inp.placeholder = A.couponPh; inp.setAttribute('aria-label', A.couponPh); inp.autocomplete = 'off';
+  const rb = el('button', '', A.redeem); rb.type = 'submit';
+  const cNote = el('p', 'demo hidden', A.couponDemo);
+  coupon.append(inp, rb);
+  coupon.addEventListener('submit', (e) => { e.preventDefault(); cNote.classList.remove('hidden'); });
+  band.append(packs, el('p', 'pnote', A.vat), payNote, coupon, cNote);
+  return band;
+}
+function renderAccount(body, P) {
+  const A = P.acc;
+  if (!demoSigned) {
+    const g = el('button', 'gbtn'); g.type = 'button';
+    g.innerHTML = '<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg><span></span>';
+    g.lastChild.textContent = P.ui.google;
+    g.addEventListener('click', () => { demoSigned = true; renderPage('account'); });
+    body.append(g, packsBand(P, A));
+    return;
+  }
+  $('pgIntro').textContent = A.signedDemo;
+  const top = el('div', 'acc-top');
+  const user = el('div', 'acc-user'); const av = el('span', 'acc-av', 'F');
+  const who = el('div'); who.append(el('strong', '', A.hello), el('span', '', A.email)); user.append(av, who);
+  const bal = el('div', 'acc-bal');
+  bal.innerHTML = '<svg width="40" height="40" viewBox="0 0 48 48" aria-hidden="true"><circle class="lt" cx="24" cy="24" r="20" fill="none" stroke-width="4.5" stroke-dasharray="0.9 2.24"/><g class="lx" fill="none" stroke-width="2.4" stroke-linecap="round"><circle cx="24" cy="24" r="10.5"/><path d="M20.4 21.2v2.2"/><path d="M27.6 21.2v2.2"/><path d="M20.4 28q3.6 2.8 7.2 0"/></g></svg><div><small></small><b>0</b></div>';
+  bal.querySelector('small').textContent = A.balance + ' · ' + t.pk_credits;
+  top.append(user, bal);
+  const zero = el('p', 'demo', A.zero);
+  const quick = el('div', 'acc-sec'); quick.append(el('h2', '', A.quick));
+  const q = el('div', 'acc-quick');
+  q.append(
+    quickBtn('globe', A.lang, () => $('region').showModal()),
+    quickBtn('moon', A.theme, () => { theme = theme === 'dark' ? 'light' : 'dark'; store.set('fs-theme', theme); apply(); }),
+    quickBtn('help', A.support, () => { location.href = 'mailto:contact@facesearch.app?subject=' + encodeURIComponent('FaceSearch – ' + A.support); }),
+    quickBtn('out', A.signout, () => { demoSigned = false; renderPage('account'); $('pgIntro').textContent = P.account.i; }, 'danger'));
+  quick.append(q);
+  const act = el('div', 'acc-sec'); act.append(el('h2', '', A.activity));
+  const empty = el('div', 'empty'); empty.innerHTML = ICO.clock + '<span></span>'; empty.lastChild.textContent = A.noact; act.append(empty);
+  body.append(top, zero, packsBand(P, A), quick, act);
+}
 function renderPage(id) {
   const P = (FS_PAGES[lang] || FS_PAGES.es), pg = P[id];
   if (!pg) return false;
@@ -678,23 +767,7 @@ function renderPage(id) {
   } else if (id === 'uses') {
     body.append(cards([[t.u1t, t.u1d], [t.u2t, t.u2d], [t.u3t, t.u3d], ...pg.items]));
   } else if (id === 'account') {
-    const g = el('button', 'gbtn'); g.type = 'button';
-    g.innerHTML = '<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg><span></span>';
-    g.lastChild.textContent = P.ui.google;
-    const note = el('p', 'demo hidden', P.ui.accountDemo);
-    g.addEventListener('click', () => note.classList.remove('hidden'));
-    const band = el('div', 'price'); band.style.cssText = 'display:block;margin-top:28px';
-    band.append(el('h2', '', t.pr_packs));
-    const packs = el('div', 'packs'); packs.style.marginTop = '18px';
-    PACKS.forEach(([n, v]) => {
-      const d = el('div', 'pack');
-      d.append(el('strong', '', n + ' ' + (n === 1 ? t.pk_credit : t.pk_credits)), el('span', 'pp', money(v)), el('span', 'per', money(v / n) + ' ' + t.pk_per));
-      const b = el('a', '', t.pk_buy); b.href = '#'; b.addEventListener('click', (e) => { e.preventDefault(); payNote.classList.remove('hidden'); });
-      d.append(b); packs.appendChild(d);
-    });
-    const payNote = el('p', 'demo hidden', P.ui.payDemo);
-    band.append(packs, el('p', 'pnote', t.pk_note), payNote);
-    body.append(g, note, band);
+    renderAccount(body, P);
   } else {
     body.append(cards(pg.items));
     if (id === 'remove') body.append(mailBtn('privacy@facesearch.app', P.remove.t, P.ui.mail));

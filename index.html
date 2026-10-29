@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Cache-Control" content="no-cache">
 <title>FaceSearch — prototipo de rediseño</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -222,6 +223,12 @@ dialog::backdrop{background:var(--scrim)}
 .pack.gift{border-color:#3DE0B0}
 .gift-note{margin:14px 0 16px!important;padding:12px 14px;border-radius:12px;background:rgba(61,224,176,.12);color:#3DE0B0;font-size:14px;font-weight:600}
 .empty{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:15px}
+/* Datos clave */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:14px}
+.fact{padding:20px;border-radius:20px;background:var(--surface);border:1px solid var(--border);display:flex;flex-direction:column;gap:6px;color:var(--text)}
+a.fact:hover{border-color:var(--mint);color:var(--text)}
+.fact .fi{width:44px;height:44px;margin-bottom:6px;border-radius:14px;background:var(--mintTint);color:var(--mintText);display:flex;align-items:center;justify-content:center}
+.fact strong{font-size:16px}.fact span:last-child{font-size:14px;color:var(--muted)}
 /* Botón flotante para subir */
 .totop{position:fixed;right:max(20px,env(safe-area-inset-right));bottom:max(20px,env(safe-area-inset-bottom));z-index:30;width:58px;height:58px;padding:0;border:0;border-radius:50%;background:var(--btn);color:var(--btnText);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;transform:translateY(18px) scale(.85);pointer-events:none;transition:opacity .25s,transform .3s cubic-bezier(.2,.9,.3,1.3)}
 .totop.show{opacity:1;transform:none;pointer-events:auto}
@@ -433,15 +440,14 @@ dialog select{width:100%;height:46px;padding:0 12px;border:1px solid var(--borde
   </section>
 
   <section class="wrap sec" id="faq" style="padding-top:0">
-    <div class="center"><h2 data-i18n="f_faq"></h2></div>
-    <div class="faq">
-      <details><summary data-i18n="q1"></summary><p data-i18n="a1"></p></details>
-      <details><summary data-i18n="q2"></summary><p data-i18n="a2"></p></details>
-      <details><summary data-i18n="q3"></summary><p data-i18n="a3"></p></details>
-      <details><summary data-i18n="q4"></summary><p data-i18n="a4"></p></details>
-      <details><summary data-i18n="q5"></summary><p data-i18n="a5"></p></details>
+    <div class="center"><h2 data-i18n="kf_h"></h2></div>
+    <div class="facts">
+      <div class="fact"><span class="fi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span><strong data-i18n="kf1t"></strong><span data-i18n="kf1d"></span></div>
+      <div class="fact"><span class="fi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></span><strong data-i18n="kf2t"></strong><span data-i18n="kf2d"></span></div>
+      <div class="fact"><span class="fi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18.2 7.8a6 6 0 1 0 0 8.4L12 12 5.8 7.8a6 6 0 1 0 0 8.4"/></svg></span><strong data-i18n="kf3t"></strong><span data-i18n="kf3d"></span></div>
+      <a class="fact" href="#/business"><span class="fi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span><strong data-i18n="kf4t"></strong><span data-i18n="kf4d"></span></a>
     </div>
-    <div class="center"><a class="more" data-href="faq"><span data-i18n="faq_all"></span> →</a></div>
+    <div class="center"><a class="more" href="#/faq"><span data-i18n="kf_more"></span> →</a></div>
   </section>
 </main>
 
@@ -602,6 +608,16 @@ const EXTRA = {
   country: ['País o región', 'Country or region', 'Pays ou région', 'Land oder Region', 'País ou região', '国・地域', '国家或地区'],
   other_country: ['Otro país', 'Other country', 'Autre pays', 'Anderes Land', 'Outro país', 'その他の国', '其他国家'],
   cur_auto: ['La moneda se ajusta a tu país: euro en la zona euro, libra en Reino Unido y dólar en el resto.', 'Currency follows your country: euro in the eurozone, pound in the UK and dollar elsewhere.', 'La devise suit votre pays : euro dans la zone euro, livre au Royaume-Uni et dollar ailleurs.', 'Die Währung richtet sich nach deinem Land: Euro in der Eurozone, Pfund im Vereinigten Königreich, sonst Dollar.', 'A moeda segue o seu país: euro na zona do euro, libra no Reino Unido e dólar no resto.', '通貨は国に合わせて変わります：ユーロ圏はユーロ、英国はポンド、その他はドル。', '货币随国家自动调整：欧元区为欧元，英国为英镑，其他地区为美元。'],
+  kf_h: ['En pocas palabras', 'In a nutshell', 'En bref', 'Kurz gesagt', 'Em poucas palavras', 'ひとことで', '简而言之'],
+  kf1t: ['Solo fuentes públicas', 'Public sources only', 'Sources publiques uniquement', 'Nur öffentliche Quellen', 'Só fontes públicas', '公開情報のみ', '仅限公开来源'],
+  kf1d: ['Sin perfiles privados ni menores.', 'No private profiles or minors.', 'Ni profils privés ni mineurs.', 'Keine privaten Profile, keine Minderjährigen.', 'Sem perfis privados nem menores.', '非公開プロフィール・未成年者は対象外。', '不含私密资料和未成年人。'],
+  kf2t: ['Tu foto no se guarda', "We don't keep your photo", "Votre photo n'est pas conservée", 'Dein Foto wird nicht gespeichert', 'Sua foto não é guardada', '写真は保存しません', '不保存你的照片'],
+  kf2d: ['Se borra al terminar la búsqueda.', 'Deleted when the search ends.', 'Supprimée à la fin de la recherche.', 'Gelöscht, sobald die Suche endet.', 'Apagada ao fim da pesquisa.', '検索終了後に削除されます。', '搜索结束后即删除。'],
+  kf3t: ['Créditos sin caducidad', 'Credits never expire', 'Crédits sans expiration', 'Credits ohne Ablauf', 'Créditos sem validade', 'クレジットは無期限', '积分永不过期'],
+  kf3d: ['Sin suscripción: pagas lo que usas.', 'No subscription: pay for what you use.', 'Sans abonnement : payez ce que vous utilisez.', 'Kein Abo: du zahlst, was du nutzt.', 'Sem assinatura: pague o que usar.', 'サブスクなし。使った分だけ。', '无需订阅，用多少付多少。'],
+  kf4t: ['Para empresas', 'For businesses', 'Pour les entreprises', 'Für Unternehmen', 'Para empresas', '法人向け', '面向企业'],
+  kf4d: ['API y descuentos por volumen.', 'API and volume discounts.', 'API et remises sur volume.', 'API und Mengenrabatte.', 'API e descontos por volume.', 'APIとボリュームディスカウント。', 'API 与批量折扣。'],
+  kf_more: ['¿Más dudas? Ver preguntas frecuentes', 'More questions? See the FAQ', "D'autres questions ? Voir la FAQ", 'Weitere Fragen? Zur FAQ', 'Mais dúvidas? Ver perguntas frequentes', 'ほかの質問を見る', '还有疑问？查看常见问题'],
   cam_none: ['No se ha encontrado ninguna cámara.', 'No camera was found.', 'Aucune caméra trouvée.', 'Keine Kamera gefunden.', 'Nenhuma câmera encontrada.', 'カメラが見つかりません。', '未找到相机。']
 };
 const T = {};
@@ -623,7 +639,7 @@ const COUNTRIES = ['ES', 'MX', 'AR', 'CO', 'CL', 'PE', 'VE', 'EC', 'US', 'CA', '
 function currencyFor(c) { return EURO_COUNTRIES.includes(c) ? 'EUR' : GBP_COUNTRIES.includes(c) ? 'GBP' : 'USD'; }
 const guessCountry = (navigator.language || '').split('-')[1];
 let country = store.get('fs-country') || (guessCountry && COUNTRIES.includes(guessCountry.toUpperCase()) ? guessCountry.toUpperCase() : 'ES');
-let cur = store.get('fs-cur') || currencyFor(country);
+let cur = store.get('fs-cur-manual') === '1' && store.get('fs-cur') ? store.get('fs-cur') : currencyFor(country);
 let theme = store.get('fs-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 let t = T[lang];
 
@@ -675,7 +691,7 @@ function countryName(code) {
   if (code === 'ZZ') return t.other_country;
   try { return new Intl.DisplayNames([LOC[lang]], { type: 'region' }).of(code); } catch (e) { return code; }
 }
-function setCountry(code) { country = code; cur = currencyFor(code); store.set('fs-country', code); store.set('fs-cur', cur); apply(); }
+function setCountry(code) { country = code; cur = currencyFor(code); store.set('fs-country', code); store.set('fs-cur', cur); store.set('fs-cur-manual', '0'); apply(); }
 function fillCountrySelect(sel) {
   sel.innerHTML = '';
   COUNTRIES.map((c) => [c, countryName(c)]).sort((a, b) => (a[0] === 'ZZ') - (b[0] === 'ZZ') || a[1].localeCompare(b[1], LOC[lang]))
@@ -692,7 +708,7 @@ function regionRow() {
   ['USD', 'EUR', 'GBP'].forEach((c) => {
     const b = document.createElement('button'); b.type = 'button'; b.textContent = c + ' ' + SYM[c];
     b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', String(c === cur));
-    b.addEventListener('click', () => { cur = c; store.set('fs-cur', c); apply(); });
+    b.addEventListener('click', () => { cur = c; store.set('fs-cur', c); store.set('fs-cur-manual', '1'); apply(); });
     curs.appendChild(b);
   });
   const note = document.createElement('small'); note.textContent = t.cur_auto;
@@ -714,7 +730,7 @@ function renderCurrencies() {
       b.textContent = c + ' ' + SYM[c];
       if (g.hasAttribute('data-cur-group')) { b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', String(c === cur)); }
       else b.setAttribute('aria-pressed', String(c === cur));
-      b.addEventListener('click', () => { cur = c; store.set('fs-cur', c); apply(); });
+      b.addEventListener('click', () => { cur = c; store.set('fs-cur', c); store.set('fs-cur-manual', '1'); apply(); });
       g.appendChild(b);
     });
   });

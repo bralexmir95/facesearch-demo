@@ -2,7 +2,7 @@
 
 Prototipo para proponer al equipo de FaceSearch. **No es la web oficial** ([facesearch.app](https://facesearch.app)).
 
-**Ver la web:** https://bralexmir95.github.io/facesearch-camara-demo/
+**Ver la web:** https://bralexmir95.github.io/facesearch-demo/
 
 ## Qué incluye
 - Portada nueva: "Una cara. Mil coincidencias.", logo con anillo de escaneo, paleta blanco/negro + menta.
